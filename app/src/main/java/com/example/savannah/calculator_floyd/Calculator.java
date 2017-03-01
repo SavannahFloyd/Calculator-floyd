@@ -159,9 +159,6 @@ public class Calculator extends AppCompatActivity {
         if(!isInput){
             isInput = true;
         }
-        if(input == '.' && !inputString.contains(".")){
-            inputString = inputString + ".";
-        }
         else if(input =='1'){
             inputString = inputString + "1";
         }
