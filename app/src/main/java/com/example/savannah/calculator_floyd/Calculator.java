@@ -61,78 +61,78 @@ public class Calculator extends AppCompatActivity {
 
         zero.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v) {
-                appendToNum('0');
+                append('0');
             }
         });
         one.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v) {
-                appendToNum('1');
+                append('1');
             }
         });
         two.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v) {
-                appendToNum('2');
+                append('2');
             }
         });
         three.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v) {
-                appendToNum('3');
+                append('3');
             }
         });
         four.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v) {
-                appendToNum('4');
+                append('4');
             }
         });
         five.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v) {
-                appendToNum('5');
+                append('5');
             }
         });
         six.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v) {
-                appendToNum('6');
+                append('6');
             }
         });
         seven.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v) {
-                appendToNum('7');
+                append('7');
             }
         });
         eight.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v) {
-                appendToNum('8');
+                append('8');
             }
         });
         nine.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v) {
-                appendToNum('9');
+                append('9');
             }
         });
         plus.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v) {
-                addOperand('+');
+                operand('+');
             }
         });
         minus.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v) {
-                addOperand('-');
+                operand('-');
             }
         });
         multiply.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v) {
-                addOperand('*');
+                operand('*');
             }
         });
         divide.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v) {
-                addOperand('/');
+                operand('/');
             }
         });
         equals.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v) {
                 if(!savedString.isEmpty() && !opString.isEmpty() && !inputString.isEmpty())
-                    performCalc();
+                    calculation();
             }
         });
         clearAll.setOnClickListener(new View.OnClickListener(){
@@ -155,7 +155,7 @@ public class Calculator extends AppCompatActivity {
             }
         });
     }
-    public void appendToNum(char input){
+    public void append(char input){
         if(!isInput){
             isInput = true;
         }
@@ -194,7 +194,7 @@ public class Calculator extends AppCompatActivity {
         }
         currentOp.setText(savedString+opString+inputString);
     }
-    public void addOperand(char input){
+    public void operand(char input){
         if(savedString.isEmpty()) {
             if (isInput) {
                 if (input == '+') {
@@ -213,7 +213,7 @@ public class Calculator extends AppCompatActivity {
             }
         }
     }
-    public void performCalc(){
+    public void calculation(){
         saved = Double.valueOf(savedString);
         current = Double.valueOf(inputString);
         if(opString.contains("+"))
