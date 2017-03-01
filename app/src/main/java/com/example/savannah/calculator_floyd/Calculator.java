@@ -2,12 +2,253 @@ package com.example.savannah.calculator_floyd;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
 
 public class Calculator extends AppCompatActivity {
 
+    private Button plus;
+    private Button minus;
+    private Button multiply;
+    private Button divide;
+    private Button zero;
+    private Button one;
+    private Button two;
+    private Button three;
+    private Button four;
+    private Button five;
+    private Button six;
+    private Button seven;
+    private Button eight;
+    private Button nine;
+    private Button clear;
+    private Button clearAll;
+    private Button equals;
+    private TextView currentOp;
+    private TextView prevOp;
+    private Double saved = 0.0;
+    private Double current = 0.0;
+    private boolean isInput = false;
+    private String inputString= "";
+    private String opString="";
+    private String savedString= "";
+    private String calcString= "";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_calculator);
+        plus = (Button) findViewById(R.id.plus);
+        minus = (Button) findViewById(R.id.minus);
+        multiply = (Button) findViewById(R.id.multiply);
+        divide = (Button) findViewById(R.id.divide);
+        zero = (Button) findViewById(R.id.zero);
+        one = (Button) findViewById(R.id.one);
+        two = (Button) findViewById(R.id.two);
+        three = (Button) findViewById(R.id.three);
+        four = (Button) findViewById(R.id.four);
+        five = (Button) findViewById(R.id.five);
+        six = (Button) findViewById(R.id.six);
+        seven = (Button) findViewById(R.id.seven);
+        eight = (Button) findViewById(R.id.eight);
+        nine = (Button) findViewById(R.id.nine);
+        clear = (Button) findViewById(R.id.clear);
+        clearAll = (Button) findViewById(R.id.clearAll);
+        equals = (Button) findViewById(R.id.equals);
+        currentOp = (TextView) findViewById(R.id.currentOp);
+        prevOp = (TextView) findViewById(R.id.currentOp);
+        currentOp.setText(savedString+opString+inputString);
+
+        zero.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View v) {
+                appendToNum('0');
+            }
+        });
+        one.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View v) {
+                appendToNum('1');
+            }
+        });
+        two.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View v) {
+                appendToNum('2');
+            }
+        });
+        three.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View v) {
+                appendToNum('3');
+            }
+        });
+        four.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View v) {
+                appendToNum('4');
+            }
+        });
+        five.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View v) {
+                appendToNum('5');
+            }
+        });
+        six.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View v) {
+                appendToNum('6');
+            }
+        });
+        seven.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View v) {
+                appendToNum('7');
+            }
+        });
+        eight.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View v) {
+                appendToNum('8');
+            }
+        });
+        nine.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View v) {
+                appendToNum('9');
+            }
+        });
+        plus.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View v) {
+                addOperand('+');
+            }
+        });
+        minus.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View v) {
+                addOperand('-');
+            }
+        });
+        multiply.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View v) {
+                addOperand('*');
+            }
+        });
+        divide.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View v) {
+                addOperand('/');
+            }
+        });
+        equals.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View v) {
+                if(!savedString.isEmpty() && !opString.isEmpty() && !inputString.isEmpty())
+                    performCalc();
+            }
+        });
+        clearAll.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                inputString = "";
+                savedString = "";
+                opString = "";
+                calcString = "";
+                saved = 0.0;
+                current = 0.0;
+                currentOp.setText(saved.toString());
+            }
+        });
+        clear.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                inputString = "";
+                currentOp.setText(savedString+opString+inputString);
+            }
+        });
+    }
+    public void appendToNum(char input){
+        if(!isInput){
+            isInput = true;
+        }
+        if(input == '.' && !inputString.contains(".")){
+            inputString = inputString + ".";
+        }
+        else if(input =='1'){
+            inputString = inputString + "1";
+        }
+        else if(input =='2'){
+            inputString = inputString + "2";
+        }
+        else if(input =='3'){
+            inputString = inputString + "3";
+        }
+        else if(input =='4'){
+            inputString = inputString + "4";
+        }
+        else if(input =='5'){
+            inputString = inputString + "5";
+        }
+        else if(input =='6'){
+            inputString = inputString + "6";
+        }
+        else if(input =='7'){
+            inputString = inputString + "7";
+        }
+        else if(input =='8'){
+            inputString = inputString + "8";
+        }
+        else if(input =='9'){
+            inputString = inputString + "9";
+        }
+        else if(input =='0'){
+            inputString = inputString + "0";
+        }
+        currentOp.setText(savedString+opString+inputString);
+    }
+    public void addOperand(char input){
+        if(savedString.isEmpty()) {
+            if (isInput) {
+                if (input == '+') {
+                    opString = "+";
+                } else if (input == '-') {
+                    opString = "-";
+                } else if (input == '*') {
+                    opString = "*";
+                } else if (input == '/') {
+                    opString = "/";
+                }
+                savedString = inputString;
+                inputString = "";
+                currentOp.setText(savedString + opString + inputString);
+                isInput = false;
+            }
+        }
+    }
+    public void performCalc(){
+        saved = Double.valueOf(savedString);
+        current = Double.valueOf(inputString);
+        if(opString.contains("+"))
+            saved = saved + current;
+        else if(opString.contains("-"))
+            saved = saved - current;
+        else if(opString.contains("*"))
+            saved = saved * current;
+        else if(opString.contains("/"))
+            saved = saved / current;
+        savedString = "";
+        opString = "";
+        inputString = "";
+        calcString = saved.toString();
+        saved = 0.0;
+        current = 0.0;
+        prevOp.setText(calcString);
+        currentOp.setText(savedString + opString + inputString);
+    }
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putString("inputSave",inputString);
+        outState.putString("savedSave",savedString);
+        outState.putString("operationSave",opString);
+        outState.putString("calcSave",calcString);
+        outState.putBoolean("isInputSave",isInput);
+    }
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onSaveInstanceState(savedInstanceState);
+        inputString = savedInstanceState.getString("inputSave");
+        savedString = savedInstanceState.getString("savedSave");
+        opString = savedInstanceState.getString("operationSave");
+        calcString = savedInstanceState.getString("calcSave");
+        isInput = savedInstanceState.getBoolean("isInputSave");
+        prevOp.setText(calcString);
+        currentOp.setText(savedString + opString + inputString);
     }
 }
